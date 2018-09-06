@@ -3,10 +3,35 @@
 #### 在react中所有的内容都可以通过组件的形式表示，并且有许多不同类型对组件。在这里我们从`React.Component`这个基类开始
 
 ```jsx
+import React from 'react'
+import autoBind from 'autobind-decorator';
+
 class ShoppingList extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      show : false,
+    }
+
+    /**
+     * 注意如果没有绑定this，在调用是会丢失函数的this指向 
+     */
+    this.show = this.show.bind(this);
+  }
+
+  show(show){
+    this.setState({show});
+  }
+
+  @autoBind
+  hide(){
+    this.setState({show:false});
+  }
+
   render() {
     return (
-      <div className="shopping-list">
+      <div className="shopping-list" onClick={this.show} >
         <h1>Shopping List for {this.props.name}</h1>
         <ul>
           <li>Instagram</li>

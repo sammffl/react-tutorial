@@ -54,3 +54,34 @@ Son.propTypes = {
 
 };
 ```
+
+
+#### state
+相对于props的不可变，state因为它的灵活可变可能会导致页面的未知错误，所以一定要区分state和props的使用场景
+
+state主要用于改变组建自身的状态，类似页面中与用户交互的部分，绝对不要把需要展示的业务数据存入state中，项目后期有无法预计的不可控性，并且代码可读性特别差
+
+
+```jsx
+class Foo extends React.Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      flag: true,
+    };
+  }
+
+  render() {
+    const {flag} = this.state;
+
+
+    return (
+      <div>
+        {!!flag && <button>submit</button>}
+      </div> 
+    );
+  }
+}
+```
