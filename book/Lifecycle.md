@@ -2,24 +2,24 @@
 
 #### 第一次Render
 
-> getDefaultProps
-> getInitialState
-> componentWillMount
-> render
-> componentDidMount
+> getDefaultProps <br/>
+> getInitialState <br/>
+> componentWillMount <br/>
+> render <br/>
+> componentDidMount <br/>
 
 #### Props 改变
-> componentWillReceiveProps
-> shouldComponentUpdate
-> componentWillUpdate
-> render
-> componentDidUpdate
+> componentWillReceiveProps <br/>
+> shouldComponentUpdate <br/>
+> componentWillUpdate <br/>
+> render <br/>
+> componentDidUpdate <br/>
 
 #### State 改变
-> shouldComponentUpdate
-> componentWillUpdate
-> render
-> componentDidUpdate
+> shouldComponentUpdate <br/>
+> componentWillUpdate <br/>
+> render <br/>
+> componentDidUpdate <br/>
 
 #### 组件卸载
 > componentWillUnmount

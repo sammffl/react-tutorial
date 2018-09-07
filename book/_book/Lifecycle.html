@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>组件 · GitBook</title>
+        <title>生命周期函数和无状态组件 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="PropsAndState.html" />
+    <link rel="next" href="ComponentConnect.html" />
     
     
-    <link rel="prev" href="JsxSyntax.html" />
+    <link rel="prev" href="PropsAndState.html" />
     
 
     </head>
@@ -115,7 +115,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="GettingStart.html">
+        <li class="chapter " data-level="1.3" data-path="GettingStart.html">
             
                 <a href="GettingStart.html">
             
@@ -141,7 +141,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="Lifecycle.html">
+        <li class="chapter active" data-level="1.5" data-path="Lifecycle.html">
             
                 <a href="Lifecycle.html">
             
@@ -223,7 +223,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >组件</a>
+        <a href="." >生命周期函数和无状态组件</a>
     </h1>
 </div>
 
@@ -238,56 +238,107 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x7EC4;&#x4EF6;">&#x7EC4;&#x4EF6;</h1>
-<h4 id="&#x5728;react&#x4E2D;&#x6240;&#x6709;&#x7684;&#x5185;&#x5BB9;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EC4;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x8868;&#x793A;&#xFF0C;&#x5E76;&#x4E14;&#x6709;&#x8BB8;&#x591A;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x5BF9;&#x7EC4;&#x4EF6;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4ECE;reactcomponent&#x8FD9;&#x4E2A;&#x57FA;&#x7C7B;&#x5F00;&#x59CB;">&#x5728;react&#x4E2D;&#x6240;&#x6709;&#x7684;&#x5185;&#x5BB9;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EC4;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x8868;&#x793A;&#xFF0C;&#x5E76;&#x4E14;&#x6709;&#x8BB8;&#x591A;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x5BF9;&#x7EC4;&#x4EF6;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4ECE;<code>React.Component</code>&#x8FD9;&#x4E2A;&#x57FA;&#x7C7B;&#x5F00;&#x59CB;</h4>
-<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react&apos;</span>
+                                <h1 id="&#x751F;&#x547D;&#x5468;&#x671F;&#x51FD;&#x6570;">&#x751F;&#x547D;&#x5468;&#x671F;&#x51FD;&#x6570;</h1>
+<h4 id="&#x7B2C;&#x4E00;&#x6B21;render">&#x7B2C;&#x4E00;&#x6B21;Render</h4>
+<blockquote>
+<p>getDefaultProps <br>
+getInitialState <br>
+componentWillMount <br>
+render <br>
+componentDidMount <br></p>
+</blockquote>
+<h4 id="props-&#x6539;&#x53D8;">Props &#x6539;&#x53D8;</h4>
+<blockquote>
+<p>componentWillReceiveProps <br>
+shouldComponentUpdate <br>
+componentWillUpdate <br>
+render <br>
+componentDidUpdate <br></p>
+</blockquote>
+<h4 id="state-&#x6539;&#x53D8;">State &#x6539;&#x53D8;</h4>
+<blockquote>
+<p>shouldComponentUpdate <br>
+componentWillUpdate <br>
+render <br>
+componentDidUpdate <br></p>
+</blockquote>
+<h4 id="&#x7EC4;&#x4EF6;&#x5378;&#x8F7D;">&#x7EC4;&#x4EF6;&#x5378;&#x8F7D;</h4>
+<blockquote>
+<p>componentWillUnmount</p>
+</blockquote>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react&apos;</span>;
+<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;prop-types&apos;</span>;
 <span class="hljs-keyword">import</span> autoBind <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;autobind-decorator&apos;</span>;
+<span class="hljs-keyword">import</span> Api <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./api&apos;</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ShoppingList</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+
+  <span class="hljs-comment">// getDefaultProps</span>
+  <span class="hljs-keyword">static</span> defaultProps = {
+    memo: <span class="hljs-string">&apos;Hello World&apos;</span>,
+  }
+
+  <span class="hljs-keyword">static</span> propTypes = {
+    memo: PropTypes.string,
+  }
+
 
   <span class="hljs-keyword">constructor</span>(props){
     <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-comment">// getInitialState</span>
     <span class="hljs-keyword">this</span>.state = {
-      show : <span class="hljs-literal">false</span>,
+      tick : <span class="hljs-number">0</span>,
     }
-
-    <span class="hljs-comment">/**
-     * &#x6CE8;&#x610F;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x7ED1;&#x5B9A;this&#xFF0C;&#x5728;&#x8C03;&#x7528;&#x662F;&#x4F1A;&#x4E22;&#x5931;&#x51FD;&#x6570;&#x7684;this&#x6307;&#x5411; 
-     */</span>
-    <span class="hljs-keyword">this</span>.show = <span class="hljs-keyword">this</span>.show.bind(<span class="hljs-keyword">this</span>);
   }
 
-  show(show){
-    <span class="hljs-keyword">this</span>.setState({show});
+  tickHandle(){
+    <span class="hljs-keyword">const</span> { tick } = <span class="hljs-keyword">this</span>.state;
+
+    <span class="hljs-keyword">this</span>.timer = setInternal(()=&gt;{
+      <span class="hljs-keyword">this</span>.setState({tick: tick + <span class="hljs-number">1</span>});
+    },<span class="hljs-number">1000</span>)
   }
 
-  @autoBind
-  hide(){
-    <span class="hljs-keyword">this</span>.setState({show:<span class="hljs-literal">false</span>});
+  <span class="hljs-comment">// &#x65E0;&#x6CD5;&#x4F7F;&#x7528;setState()&#x91CD;&#x65B0;&#x6E32;&#x67D3;</span>
+  componentWillMount(){}
+
+  componentWillReceiveProps(){}
+
+  shouldComponentUpdate(){
+    <span class="hljs-keyword">const</span> { tick } = <span class="hljs-keyword">this</span>.state;
+    <span class="hljs-keyword">return</span> tick &lt; <span class="hljs-number">10</span>;
+  }
+
+  componentWillUpdate(){}
+
+  componentDidUpdate(){}
+
+  componentDidMount(){
+    Api.getUserInfo((data)=&gt;{});
+  }
+
+  componentWillUnmount(){
+    clearInterval(<span class="hljs-keyword">this</span>.timer);
   }
 
   render() {
+    <span class="hljs-keyword">const</span> { memo } = <span class="hljs-keyword">this</span>.props;
+    <span class="hljs-keyword">const</span> { tick } = <span class="hljs-keyword">this</span>.state;
+
     <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;shopping-list&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{this.show}</span> &gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Shopping List for {this.props.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Instagram<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>WhatsApp<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Oculus<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+      &lt;div className=&quot;demo&quot; &gt;
+        &lt;p&gt;{memo}&lt;/p&gt;
+        &lt;div&gt;&#x8BA1;&#x6570;&#xFF1A;{tick}&lt;div&gt;
+      &lt;/div&gt;
     );
   }
 }
-
-<span class="hljs-comment">// Example usage: &lt;ShoppingList name=&quot;Mark&quot; /&gt;</span>
 </code></pre>
-<p>&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x6709;&#x4ED6;&#x81EA;&#x5DF1;&#x7684;&#x5C5E;&#x6027;&#x6211;&#x4EEC;&#x79F0;&#x4E4B;&#x4E3A;props&#xFF0C;&#x7EC4;&#x4EF6;&#x901A;&#x8FC7;render&#x65B9;&#x6CD5;&#x6765;&#x6E32;&#x67D3;&#x9875;&#x9762;&#x5185;&#x5BB9;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x5185;&#x5BB9;&#x4F7F;&#x7528;&#x7684;&#x5C31;&#x662F;jsx&#x7684;&#x8BED;&#x6CD5;&#xFF0C;JSX&#x7684;&#x8BED;&#x6CD5;&#x7684;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x5B9E;&#x73B0;React.createElement</p>
-<pre><code class="lang-jsx"><span class="hljs-comment">// ShoppingList &#x7EC4;&#x4EF6;&#x4E2D;&#x7684;render&#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x5B9E;&#x73B0;&#x7684;&#x662F;createElement&#x65B9;&#x6CD5;</span>
-<span class="hljs-keyword">return</span> React.createElement(<span class="hljs-string">&apos;div&apos;</span>, {className: <span class="hljs-string">&apos;shopping-list&apos;</span>},
-  React.createElement(<span class="hljs-string">&apos;h1&apos;</span>, <span class="hljs-comment">/* ... h1 children ... */</span>),
-  React.createElement(<span class="hljs-string">&apos;ul&apos;</span>, <span class="hljs-comment">/* ... ul children ... */</span>)
-);
+<h2 id="&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x65E0;&#x72B6;&#x6001;&#x7EC4;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x53EA;&#x662F;&#x5355;&#x7EAF;&#x6E32;&#x67D3;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;">&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x65E0;&#x72B6;&#x6001;&#x7EC4;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x53EA;&#x662F;&#x5355;&#x7EAF;&#x6E32;&#x67D3;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;</h2>
+<pre><code class="lang-jsx"><span class="hljs-keyword">const</span> statelessComponent = (props) =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{props.children}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+statelessComponent.propType = {
+  ...
+}
 </code></pre>
 
                                 
@@ -316,12 +367,12 @@
 
             
                 
-                <a href="JsxSyntax.html" class="navigation navigation-prev " aria-label="Previous page: JSX语法">
+                <a href="PropsAndState.html" class="navigation navigation-prev " aria-label="Previous page: props和state">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="PropsAndState.html" class="navigation navigation-next " aria-label="Next page: props和state">
+                <a href="ComponentConnect.html" class="navigation navigation-next " aria-label="Next page: 组件之间的通信">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -332,7 +383,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"组件","level":"1.3","depth":1,"next":{"title":"props和state","level":"1.4","depth":1,"path":"PropsAndState.md","ref":"./PropsAndState.md","articles":[]},"previous":{"title":"JSX语法","level":"1.2","depth":1,"path":"JsxSyntax.md","ref":"./JsxSyntax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"GettingStart.md","mtime":"2018-09-06T12:27:43.816Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-07T14:49:59.591Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"生命周期函数和无状态组件","level":"1.5","depth":1,"next":{"title":"组件之间的通信","level":"1.6","depth":1,"path":"ComponentConnect.md","ref":"./ComponentConnect.md","articles":[]},"previous":{"title":"props和state","level":"1.4","depth":1,"path":"PropsAndState.md","ref":"./PropsAndState.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Lifecycle.md","mtime":"2018-09-06T14:33:31.211Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-07T14:49:59.591Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
